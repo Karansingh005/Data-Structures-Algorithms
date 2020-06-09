@@ -64,7 +64,62 @@ public class DynamicArray<T> implements Iterable<T> {
         return data;
     }
 
-    public static void main (String args[]){
-        System.out.println("Hello World");
+    public boolean remove(Object obj){
+        int index = indexOf(obj);
+        if (index == -1)
+            return false;
+        removeAt(index);
+        return true;
     }
+
+    public int indexOf(Object obj){
+        for (int i = 0; i < len; i++){
+            if (obj == null){
+                if (arr[i] == null) return i;
+            }
+            else 
+            {
+                if (obj.equals(arr[i]))
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean contains(Object obj) {
+        return indexOf(obj) != -1;
+    }
+
+    @Override
+    public java.util.Iterator<T> iterator() {
+        return new java.util.Iterator<T>() {
+        int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < len;
+        }
+
+        @Override
+        public T next() {
+            return arr[index++];
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+        };
+    }
+
+    @Override
+    public String toString() {
+      if (len == 0) return "[]";
+      else {
+        StringBuilder sb = new StringBuilder(len).append("[");
+        for (int i = 0; i < len - 1; i++) sb.append(arr[i] + ", ");
+        return sb.append(arr[len - 1] + "]").toString();
+      }
+    }
+
 }
